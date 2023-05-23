@@ -1,0 +1,80 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --crema: #ecdbb5;
+    --winning-blocks: #066ea2;
+    --fondo:#37505C;
+}
+
+body{
+    background-color: #E3D8D6;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+body main{
+    width: 80%;
+    display: flex;
+
+}
+
+body #contenedor{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-evenly;
+    align-items:flex-start;
+
+}
+
+body #contenedor .tarjeta{
+    margin: 10px;
+    min-height: 550px;
+}
+
+.imagen{
+    max-width:100%;
+    width: 269px;
+    height: 169px;
+}
+
+a{
+    cursor:pointer;
+}
+.alerta{
+    font-weight:700;
+}
+
+.modal-contenedor{
+    display:flex;
+    align-items: center;
+    gap:2rem;
+}
+.img-carrito{
+    width: 269px;
+    height: 169px;
+    padding:20px;
+} 
+.modal-content{
+    background-color: #E3D8D6;
+}
+.parrafo{
+    font-weight: 900;
+    font-style: italic;
+}
+#precioTotal{
+    margin:0;
+    padding:0;
+}
+a{
+    text-decoration: none;
+}
+.boton{
+    opacity:0;
+}
