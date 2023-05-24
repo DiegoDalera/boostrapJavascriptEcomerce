@@ -5,6 +5,8 @@ const carrito = [];
 // Constantes
 
 const contenedor = document.querySelector("#contenedor");
+const modalBody = document.querySelector(".modal .modal-body");
+
 const carritoContenedor = document.querySelector("#carritoContenedor");
 const vaciarCarrito = document.querySelector("#vaciarCarrito");
 const precioTotal = document.querySelector("#precioTotal");
@@ -15,10 +17,11 @@ const formulario = document.querySelector('#procesar-pago')
 
 
 //carga los cursos en .contenedor
-stockCursos.forEach((curso) => {
-    const { id, nombre, precio, desc, img, cantidad } = curso;
-    if (contenedor) {
-        contenedor.innerHTML += `
+const cargarProductos = () => {
+    stockCursos.forEach((curso) => {
+        const { id, nombre, precio, desc, img, cantidad } = curso;
+        if (contenedor) {
+            contenedor.innerHTML += `
     <div class="card mt-3 tarjeta" style="width: 18rem;">
     <img class="card-img-top mt-2" src="${img}" alt="Card image cap">
     <div class="card-body">
@@ -26,39 +29,38 @@ stockCursos.forEach((curso) => {
       <p class="card-text">Precio: ${precio}</p>
       <p class="card-text">Descripcion: ${desc}</p>
       <p class="card-text">Cantidad: ${cantidad}</p>
-      <button class="btn btn-primary" onclick="agregarProducto(${id})">Comprar Curso</button>
+      <button class="btn btn-primary" onclick="agregarCursoCarrito(${id})">Comprar Curso</button>
     </div>
   </div>
     `;
-    }
-});
+        }
+    });
+}
 
-// Agraga los elementos clikeados al carrito 
-
-const agregarProducto = (id) => {
+// Agrega los elementos clikeados al carrito (ver bien)
+const agregarCursoCarrito = (id) => {
     const existeCurso = carrito.some(curso => curso.id === id)
 
     if (existeCurso) {
-        const prod = carrito.map(curso => {
-            if (curso.id === id) {
-                curso.cantidad++
+        const curs = carrito.map(curs => {
+            if (curs.id === id) {
+                curs.cantidad++
             }
         })
     } else {
-        const prod = stockCursos.find((curso) => curso.id === id)
-        carrito.push(prod)
+        const curs = stockCursos.find((curso) => curso.id === id)
+        carrito.push(curs)
     }
     mostrarCarrito()
 };
 
 
 const mostrarCarrito = () => {
-    const modalBody = document.querySelector(".modal .modal-body");
+   
     if (modalBody) {
         modalBody.innerHTML = "";
-        carrito.forEach((prod) => {
-            const { id, nombre, precio, desc, img, cantidad } = prod;
-            console.log(modalBody);
+        carrito.forEach((curs) => {
+            const { id, nombre, precio, desc, img, cantidad } = curs;
             modalBody.innerHTML += `
       <div class="modal-contenedor">
         <div>
@@ -82,7 +84,7 @@ const mostrarCarrito = () => {
     <p class="text-center text-primary parrafo">¡Aun no agregaste nada!</p>
     `;
     } else {
-        
+
     }
 
     carritoContenedor.textContent = carrito.length;
@@ -96,6 +98,13 @@ const mostrarCarrito = () => {
 
     guardarStorage();
 };
+
+function eliminarProducto(id) {
+    const juegoId = id;
+    carrito = carrito.filter((juego) => juego.id !== juegoId);
+    mostrarCarrito();
+}
+
 
 function guardarStorage() {
     localStorage.setItem("carrito", JSON.stringify(carrito));
@@ -142,11 +151,7 @@ if (procesarCompra) {
 
 
 
-function eliminarProducto(id) {
-    const juegoId = id;
-    carrito = carrito.filter((juego) => juego.id !== juegoId);
-    mostrarCarrito();
-}
+
 function procesarPedido() {
     carrito.forEach((prod) => {
         const listaCompra = document.querySelector("#lista-compra tbody");
