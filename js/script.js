@@ -7,7 +7,6 @@ const vaciarCarrito = document.querySelector("#vaciarCarrito");
 const precioTotal = document.querySelector("#precioTotal");
 const continuarCompra = document.querySelector("#continuarCompra");
 const activarFuncion = document.querySelector("#activarFuncion");
-
 const totalProceso = document.querySelector("#totalProceso");
 const formulario = document.querySelector('#procesar-pago')
 
@@ -21,8 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 if (activarFuncion) {
-   activarFuncion.addEventListener("click", procesarPedidoCursos);
- }
+  activarFuncion.addEventListener("click", procesarPedidoCursos);
+}
 
 
 
@@ -50,20 +49,20 @@ function procesarPedidoCursos() {
   );
 }
 
-if (continuarCompra){
-continuarCompra.addEventListener("click", () => {
-  if (carrito.length === 0) {
-    Swal.fire({
-      title: "¡Tu carrito está vacio!",
-      text: "Debes comprar algo para poder  continuar con la compra",
-      icon: "error",
-      confirmButtonText: "Aceptar",
-    });
-  } else {
-    location.href = "compra.html";
-    procesarPedidoCursos();
-  }
-})
+if (continuarCompra) {
+  continuarCompra.addEventListener("click", () => {
+    if (carrito.length === 0) {
+      Swal.fire({
+        title: "¡Tu carrito está vacio!",
+        text: "Debes comprar algo para poder  continuar con la compra",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
+    } else {
+      location.href = "compra.html";
+      procesarPedidoCursos();
+    }
+  })
 };
 
 
@@ -169,4 +168,52 @@ if (vaciarCarrito) {
     carrito.length = [];
     mostrarCarrito();
   });
+}
+
+
+if (formulario) {
+  formulario.addEventListener('submit', enviarCompra)
+}
+
+
+
+function enviarCompra(e) {
+  e.preventDefault()
+
+  const cliente = document.querySelector('#cliente').value
+  const email = document.querySelector('#correo').value
+
+  console.log(cliente);
+
+  if (email === '' || cliente == '') {
+    Swal.fire({
+      title: "¡Debes completar tu email y nombre!",
+      text: "Rellena el formulario",
+      icon: "error",
+      confirmButtonText: "Aceptar",
+    })
+  } else {
+   
+    const spinner = document.querySelector('#spinner')
+    spinner.classList.add('d-flex')
+    spinner.classList.remove('d-none')
+
+    setTimeout(() => {
+      spinner.classList.remove('d-flex')
+      spinner.classList.add('d-none')
+      formulario.reset()
+    }, 3000)
+
+    const alertExito = document.createElement('p')
+    alertExito.classList.add('alert', 'alerta', 'd-block', 'text-center', 'col-12', 'mt-2', 'alert-success')
+    alertExito.textContent = 'Compra realizada correctamente'
+    formulario.appendChild(alertExito)
+
+    setTimeout(() => {
+      alertExito.remove()
+    }, 3000)
+
+   localStorage.clear()
+
+  }
 }
