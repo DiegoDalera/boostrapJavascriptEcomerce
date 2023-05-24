@@ -5,16 +5,67 @@ const contenedor = document.querySelector("#contenedor");
 const carritoContenedor = document.querySelector("#carritoContenedor");
 const vaciarCarrito = document.querySelector("#vaciarCarrito");
 const precioTotal = document.querySelector("#precioTotal");
-
+const continuarCompra = document.querySelector("#continuarCompra");
 const activarFuncion = document.querySelector("#activarFuncion");
-const procesarCompra = document.querySelector("#procesarCompra");
+
 const totalProceso = document.querySelector("#totalProceso");
 const formulario = document.querySelector('#procesar-pago')
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
   carrito = JSON.parse(localStorage.getItem("carrito")) || [];
   mostrarCarrito();
+  document.querySelector("#activarFuncion").click(procesarPedidoCursos);
 })
+
+
+if (activarFuncion) {
+   activarFuncion.addEventListener("click", procesarPedidoCursos);
+ }
+
+
+
+function procesarPedidoCursos() {
+  carrito.forEach((curso) => {
+    const listaCompra = document.querySelector("#lista-compra tbody");
+    const { id, nombre, precio, img, cantidad } = curso;
+    if (listaCompra) {
+      const row = document.createElement("tr");
+      row.innerHTML += `
+              <td>
+              <img class="img-fluid img-carrito" src="${img}"/>
+              </td>
+              <td>${nombre}</td>
+            <td>${precio}</td>
+            <td>${cantidad}</td>
+            <td>${precio * cantidad}</td>
+            `;
+      listaCompra.appendChild(row);
+    }
+  });
+  totalProceso.innerText = carrito.reduce(
+    (acc, prod) => acc + prod.cantidad * prod.precio,
+    0
+  );
+}
+
+if (continuarCompra){
+continuarCompra.addEventListener("click", () => {
+  if (carrito.length === 0) {
+    Swal.fire({
+      title: "¡Tu carrito está vacio!",
+      text: "Debes comprar algo para poder  continuar con la compra",
+      icon: "error",
+      confirmButtonText: "Aceptar",
+    });
+  } else {
+    location.href = "compra.html";
+    procesarPedidoCursos();
+  }
+})
+};
+
 
 
 stockCursos.forEach((prod) => {
@@ -34,6 +85,7 @@ stockCursos.forEach((prod) => {
     `;
   }
 });
+
 
 
 const agregarCurso = (id) => {
@@ -98,6 +150,7 @@ const mostrarCarrito = () => {
 };
 
 
+
 function eliminarCurso(id) {
   const cursoId = id;
   carrito = carrito.filter((curso) => curso.id !== cursoId);
@@ -108,6 +161,8 @@ function eliminarCurso(id) {
 function guardarStorage() {
   localStorage.setItem("carrito", JSON.stringify(carrito));
 }
+
+
 
 if (vaciarCarrito) {
   vaciarCarrito.addEventListener("click", () => {
