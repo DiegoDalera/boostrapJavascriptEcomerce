@@ -1,4 +1,7 @@
 
+
+const carrito = [];
+
 // Constantes
 
 const contenedor = document.querySelector("#contenedor");
@@ -42,8 +45,8 @@ const agregarProducto = (id) => {
             }
         })
     } else {
-        const item = stockCursos.find((curso) => curso.id === id)
-        carrito.push(item)
+        const prod = stockCursos.find((curso) => curso.id === id)
+        carrito.push(prod)
     }
     mostrarCarrito()
 };
@@ -75,13 +78,13 @@ const mostrarCarrito = () => {
     }
 
     if (carrito.length === 0) {
-        console.log("Nada");
         modalBody.innerHTML = `
     <p class="text-center text-primary parrafo">¡Aun no agregaste nada!</p>
     `;
     } else {
-        console.log("Algo");
+        
     }
+
     carritoContenedor.textContent = carrito.length;
 
     if (precioTotal) {
@@ -97,7 +100,6 @@ const mostrarCarrito = () => {
 function guardarStorage() {
     localStorage.setItem("carrito", JSON.stringify(carrito));
 }
-
 
 
 if (activarFuncion) {

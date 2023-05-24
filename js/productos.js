@@ -56,7 +56,7 @@ const stockCursos = [
       desc: "Aprende el Lenguaje de Programación Web más popular paso a paso con +20 Proyectos - Incluye Proyecto MERN Full Stack",
       precio: 1700,
       img: "img/javaScript_07.jpg",
-    },,
+    },
     {
       id: 8,
       nombre: "React Desde Cero",
