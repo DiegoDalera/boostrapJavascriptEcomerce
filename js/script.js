@@ -178,7 +178,7 @@ if (formulario) {
 
 
 function enviarCompra(e) {
-  e.preventDefault()
+  e.preventDefault();
 
   const cliente = document.querySelector('#cliente').value
   const email = document.querySelector('#correo').value
